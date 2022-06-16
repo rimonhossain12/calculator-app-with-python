@@ -125,9 +125,15 @@ class Calculator:
         self.total_expression += self.current_expression
         self.update_total_label()
 
-        self.current_expression = str(eval(self.total_expression))
+        try:
+            self.current_expression = str(eval(self.total_expression))
+            self.total_expression = ""
 
-        self.total_expression = ""
+        except Exception as e:
+            self.current_expression = "Error"
+        finally:
+            self.update_label()
+
         self.update_label()
 
     def create_equals_button(self):
