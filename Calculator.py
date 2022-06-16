@@ -102,7 +102,7 @@ class Calculator:
         button.grid(row=0, column=1,sticky=tk.NSEW)
 
     def square(self):
-        self.current_expression = str(eval(f"{self.current_expression}**0.5"))
+        self.current_expression = str(eval(f"{self.current_expression}**2"))
         self.update_label()
 
     def create_square_button(self):
@@ -141,10 +141,13 @@ class Calculator:
         return frame
 
     def update_total_label(self):
-        self.total_label.config(text=self.total_expression)
+        expression = self.total_expression
+        for operator, symbol in self.operations.items():
+            expression = expression.replace(operator, f' {symbol} ')
+        self.total_label.config(text=expression)
 
     def update_label(self):
-        self.lablel.config(text=self.current_expression)
+        self.lablel.config(text=self.current_expression[:11])
 
 
     def run(self):
