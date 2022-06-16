@@ -102,10 +102,11 @@ class Calculator:
     def evaluate(self):
         self.total_expression += self.current_expression
         self.update_total_label()
-        self.current_expression = str(eval(self.total_expression))
-        self.total_expression =""
-        self.update_label()
 
+        self.current_expression = str(eval(self.total_expression))
+
+        self.total_expression = ""
+        self.update_label()
 
     def create_equals_button(self):
         button = tk.Button(self.buttons_frame, text="=", bg=LIGHT_BLUE, fg=LABEL_COLOR, font=DEFAULT_FONT_STYLE,
