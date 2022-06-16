@@ -35,9 +35,6 @@ class Calculator:
         self.operations = {"/": "\u00F7", "*": "\u00D7", "-": "-", "+": "+"}
         self.buttons_frame = self.create_buttons_frame()
 
-
-
-
         self.buttons_frame.rowconfigure(0, weight=1)
 
         for x in range(1,5):
@@ -86,18 +83,33 @@ class Calculator:
         i = 0
         for operator,symbol in self.operations.items():
             button = tk.Button(self.buttons_frame,text=symbol,bg=OFF_WHITE,fg=LABEL_COLOR,font=DEFAULT_FONT_STYLE,
-                               borderwidth=0,command=lambda x=operator: self.append_operator(operator))
+                               borderwidth=0,command=lambda x=operator: self.append_operator(x))
             button.grid(row=i,column=4,sticky=tk.NSEW)
             i+=1
 
+    def clear(self):
+        self.current_expression = ""
+        self.total_expression =""
+        self.update_label()
+        self.update_total_label()
+
     def create_clear_button(self):
         button = tk.Button(self.buttons_frame, text="C", bg=OFF_WHITE, fg=LABEL_COLOR, font=DEFAULT_FONT_STYLE,
-                           borderwidth=0)
+                           borderwidth=0,command=self.clear())
         button.grid(row=0, column=1, columnspan=3, sticky=tk.NSEW)
+
+
+    def evaluate(self):
+        self.total_expression += self.current_expression
+        self.update_total_label()
+        self.current_expression = str(eval(self.total_expression))
+        self.total_expression =""
+        self.update_label()
+
 
     def create_equals_button(self):
         button = tk.Button(self.buttons_frame, text="=", bg=LIGHT_BLUE, fg=LABEL_COLOR, font=DEFAULT_FONT_STYLE,
-                           borderwidth=0)
+                           borderwidth=0,command=self.evaluate)
         button.grid(row=4, column=3, columnspan=2, sticky=tk.NSEW)
 
     def create_buttons_frame(self):
